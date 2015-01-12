@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cmd=$(which tmux) # tmux path
+session="3-57"   # session name
+
+if [ -z $cmd  ]; then
+    echo "You need to install tmux."
+    exit 1
+fi
+
+$cmd has -t $session
+if [ $? -ne 0 ];then
+    $cmd new -d -n $session -s $session
+    sleep 1
+    cd /home/zhangmenghan/bitqiu/Release && $cmd neww -t $session
+    cd /home/zhangmenghan/bitqiu/Source && $cmd neww -t $session
+    $cmd selectw -t $session:0
+fi
+$cmd att -t $session
